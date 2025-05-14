@@ -10,3 +10,5 @@ class HelloForm(forms.Form):
         ("female", "Female")
     ]
     choice = forms.ChoiceField(label = "choice", choices = data)
+    mail = forms.EmailField(label = "mail", required = True, widget = forms.EmailInput(attrs={"class":"form-control"}))
+    password = forms.CharField(label = "password", required = True, widget = forms.TextInput(attrs={"class":"form-control"}))

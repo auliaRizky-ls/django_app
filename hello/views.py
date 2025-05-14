@@ -19,6 +19,8 @@ class HelloView(TemplateView):
         msg = 'Your name is, <b>' + request.POST["name"] + \
         '(' + request.POST["age"] + ').'
         ch = request.POST["choice"]
-        self.params["result"] = msg + ' Your gender is, ' + ch + '.'
+        mail = request.POST["mail"]
+        password = "(表示しません)"
+        self.params["result"] = msg + ' Your gender is, ' + ch + '.<br>' 'Your email address is, ' + mail + '.<br>' 'And, your password is, ' + password + '.'
         self.params["form"] = HelloForm(request.POST)
         return render(request, "hello/index.html", self.params)
