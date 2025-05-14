@@ -1,19 +1,71 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>{{title}}</title>
-    <!-- CSS only -->
-    <link href = "https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.css" rel = "stylesheet" crossorigin = "anonymous"/>
+    <title>{{ title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous"/>
+    <style>
+        .form-box {
+            border: 2px solid #000;
+            padding: 16px;
+            width: 350px;
+            margin: 24px auto;
+        }
+        .form-title {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 2rem;
+        }
+        .inline-list label {
+            margin-right: 1.5em;
+        }
+    </style>
 </head>
-<body class="container">
-    <h1 class="display-4 text-primary">{{title}}</h1>
-    <p class="h5 mt-4">{{result|safe}}</p>
-    <form action = "{% url 'index' %}" method = "post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type = "submit" class = "btn btn-primary my-2" value = "click">
-    </form>
+<body>
+    <div class="form-box">
+        <div class="form-title mb-3">{{ title }}</div>
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Hobbies -->
+            <div class="mb-2">{{ form.hobbies.label }}</div>
+            <div class="inline-list mb-2">
+                {% for checkbox in form.hobbies %}
+                    <label class="form-check form-check-inline">
+                        {{ checkbox.tag }} {{ checkbox.choice_label }}
+                    </label>
+                {% endfor %}
+            </div>
+
+            <!-- Color -->
+            <div class="mb-2">{{ form.color.label }}</div>
+            <div class="inline-list mb-2">
+                {% for radio in form.color %}
+                    <label class="form-check form-check-inline">
+                        {{ radio.tag }} {{ radio.choice_label }}
+                    </label>
+                {% endfor %}
+            </div>
+
+            <!-- Birthdate -->
+            <div class="mb-2">
+                {{ form.birthdate.label }} {{ form.birthdate }}
+            </div>
+
+            <button type="submit" class="btn btn-outline-dark btn-sm">送信</button>
+        </form>
+
+        {% if result %}
+            <div class="section-title mt-4">入力された情報</div>
+            <div>趣味: {{ result.hobbies }}</div>
+            <div>好きな色: {{ result.color }}</div>
+            <div>誕生日: {{ result.birthdate }}</div>
+        {% endif %}
+    </div>
 </body>
 </html>

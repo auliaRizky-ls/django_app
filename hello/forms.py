@@ -1,14 +1,31 @@
 from django import forms
 
+HOBBY_CHOICES = [
+    ('reading', '読書'),
+    ('sports', 'スポーツ'),
+    ('music', '音楽'),
+]
+
+COLOR_CHOICES = [
+    ('red', '赤'),
+    ('blue', '青'),
+    ('green', '緑'),
+]
+
 class HelloForm(forms.Form):
-    name = forms.CharField(label = "name", required = True, widget = forms.TextInput(attrs={"class":"form-control"}))
-    age = forms.IntegerField(label = "age", widget = forms.NumberInput(attrs={"class":"form-control"}))
-    
-    data = [
-        ("apache helicopter", "Apache Helicopter"),
-        ("male", "Male"),
-        ("female", "Female")
-    ]
-    choice = forms.ChoiceField(label = "choice", choices = data)
-    mail = forms.EmailField(label = "mail", required = True, widget = forms.EmailInput(attrs={"class":"form-control"}))
-    password = forms.CharField(label = "password", required = True, widget = forms.TextInput(attrs={"class":"form-control"}))
+    hobbies = forms.MultipleChoiceField(
+        label="趣味を選んでください（複数可）：",
+        choices=HOBBY_CHOICES,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'})
+    )
+
+    color = forms.ChoiceField(
+        label="好きな色を選んでください：",
+        choices=COLOR_CHOICES,
+        widget=forms.RadioSelect(attrs={'class': 'form-check-input'})
+    )
+
+    birthdate = forms.DateField(
+        label="誕生日：",
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
+    )

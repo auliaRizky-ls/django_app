@@ -7,7 +7,7 @@ class HelloView(TemplateView):
     def __init__(self):
         self.params = {
             "title" : "Hello",
-            "message" : "Please Insert Your Data:",
+            "message" : "What are your hobbies:",
             "form" : HelloForm(),
             "result" : None
         }
@@ -16,11 +16,21 @@ class HelloView(TemplateView):
         return render(request, "hello/index.html", self.params)
     
     def post(self, request):
-        msg = 'Your name is, <b>' + request.POST["name"] + \
-        '(' + request.POST["age"] + ').'
-        ch = request.POST["choice"]
-        mail = request.POST["mail"]
-        password = "(表示しません)"
-        self.params["result"] = msg + ' Your gender is, ' + ch + '.<br>' 'Your email address is, ' + mail + '.<br>' 'And, your password is, ' + password + '.'
+        form = HelloForm(request.POST)
+        if form.is_valid():
+            hobbies = form.cleaned_data['hobbies']
+            color = form.cleaned_data['color']
+            birthdate = form.cleaned_data['birthdate']
+            
+            # Convert values to display labels
+            hobby_dict = dict(form.fields['hobbies'].choices)
+            color_dict = dict(form.fields['color'].choices)
+            self.params["result"] = {
+                'hobbies': [hobby_dict[h] for h in hobbies],
+                'color': color_dict[color],
+                'birthdate': birthdate,
+            }
+        else:
+            self.params["result"] = None
         self.params["form"] = HelloForm()
         return render(request, "hello/index.html", self.params)
