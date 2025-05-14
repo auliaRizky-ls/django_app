@@ -1,8 +1,24 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import TemplateView
+from .forms import HelloForm
 
-# Create your views here.
-def index(request):
-    #return HttpResponse("Hello World!") #Question 2-1
-    #return HttpResponse(f"Hello, {firstname} {lastname}") #Question 2-2
-    return render(request, 'hello/index.html')
+class HelloView(TemplateView):
+    def __init__(self):
+        self.params = {
+            "title" : "Hello",
+            "message" : "Please Insert Your Data:",
+            "form" : HelloForm(),
+            "result" : None
+        }
+
+    def get(self, request):
+        return render(request, "hello/index.html", self.params)
+    
+    def post(self, request):
+        msg = 'Your name is, <b>' + request.POST["name"] + \
+        '(' + request.POST["age"] + ').'
+        ch = request.POST["choice"]
+        self.params["result"] = msg + ' Your gender is, ' + ch + '.'
+        self.params["form"] = HelloForm(request.POST)
+        return render(request, "hello/index.html", self.params)
