@@ -5,7 +5,7 @@ class HelloForm(forms.Form):
     age = forms.IntegerField(label = "age", widget = forms.NumberInput(attrs={"class":"form-control"}))
     
     data = [
-        ("apache Helicopter", "Apache Helicopter"),
+        ("apache helicopter", "Apache Helicopter"),
         ("male", "Male"),
         ("female", "Female")
     ]
