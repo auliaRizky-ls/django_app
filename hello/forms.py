@@ -20,3 +20,6 @@ class HelloForm(forms.Form):
         ("five", "item 5")
     ]
     choice = forms.MultipleChoiceField(label = "radio", choices = data, widget = forms.SelectMultiple(attrs={"size": 6, "class":"form-select"}))
+
+class SessionForm(forms.Form):
+    session = forms.CharField(label = "session", required = False, widget = forms.TextInput(attrs={"class":"form-control"}))
