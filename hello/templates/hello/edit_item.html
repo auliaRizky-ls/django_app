@@ -1,0 +1,13 @@
+{# templates/hello/edit_item.html #}
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>{{ item.name }} 編集</title></head>
+<body>
+  <h1>{{ item.name }} の編集</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">保存</button>
+  </form>
+</body>
+</html>

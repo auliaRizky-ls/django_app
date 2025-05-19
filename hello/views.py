@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from .models import Item
 from .forms import ItemForm
 
@@ -40,3 +41,19 @@ def manage_item(request):
     else:
         form = ItemForm()
     return render(request, 'hello/item_list_add_edit.html', {'items': items, 'form': form})
+
+#question 10-2 edit item
+def item_edit_list(request):
+    items = Item.objects.all()
+    return render(request, 'hello/item_edit_list.html', {'items': items})
+
+def edit_item(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
+    if request.method == 'POST':
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('item_edit_list')
+    else:
+        form = ItemForm(instance=item)
+    return render(request, 'hello/edit_item.html', {'form': form,'item': item})
