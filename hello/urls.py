@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import products_cart, cart_clear, item_list, items_price_100, manage_item, edit_item, item_edit_list
+from .views import products_cart, cart_clear, item_list, items_price_100, manage_item, edit_item, item_edit_list, search_item_by_name
 
 urlpatterns = [
     #path('', HelloView.as_view(), name = 'index'),
@@ -14,4 +14,7 @@ urlpatterns = [
     path("items/manage", manage_item, name = "manage_item"),
     path("items/edit/", item_edit_list, name = "item_edit_list"),
     path("items/edit/<int:item_id>/", edit_item, name = "edit_item"),
+
+    #question 11
+    path("items/search_name/", search_item_by_name, name = "search_item_by_name"),
 ]

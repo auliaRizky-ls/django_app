@@ -57,3 +57,9 @@ def edit_item(request, item_id):
     else:
         form = ItemForm(instance=item)
     return render(request, 'hello/edit_item.html', {'form': form,'item': item})
+
+#question 11-1 search item by name
+def search_item_by_name(request):
+    q = request.GET.get('q', '')
+    result = Item.objects.filter(name__icontains=q) if q else []
+    return render(request, 'hello/search_item_by_name.html', {'result': result, 'q': q})
