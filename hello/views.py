@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 #from django.views.generic import TemplateView
 from .forms import FriendForm
+from .forms import FindForm
 from .models import Friend
 from django.views.generic import ListView
 from django.views.generic import DetailView
+from django.db.models import Q
 
 class FriendList(ListView):
     model = Friend
@@ -56,6 +58,25 @@ def delete(request, num):
         "obj" : friend,
     }
     return render(request, 'hello/delete.html', params)
+
+def find(request):
+    if (request.method == "POST"):
+        form = FindForm(request.POST)
+        find = request.POST['find']
+        list = find.split()
+        data = Friend.objects.filter(name__in = list)
+        msg = "Result: " + str(data.count())
+    else:
+        msg = "search words..."
+        form = FindForm()
+        data = Friend.objects.all()
+    params = {
+        "title" : "Hello",
+        "message" : msg,
+        "form" : form,
+        "data" : data,
+    }
+    return render(request, 'hello/find.html', params)
 
 # class HelloView(TemplateView):
 #     def __init__(self):
