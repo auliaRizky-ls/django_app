@@ -1,4 +1,5 @@
 from django import forms
+from .models import Item
 
 HOBBY_CHOICES = [
     ('reading', '読書'),
@@ -29,3 +30,8 @@ class HelloForm(forms.Form):
         label="誕生日：",
         widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
     )
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['name', 'price', 'description', 'stock']

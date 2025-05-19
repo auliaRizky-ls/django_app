@@ -1,0 +1,35 @@
+{# templates/hello/item_list_add_edit.html #}
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>アイテム管理</title></head>
+<body>
+  <h1>アイテム管理ページ</h1>
+
+  <!-- Form -->
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">追加</button>
+  </form>
+
+  <hr>
+
+  <!-- Item list -->
+  {% if items %}
+    <ul>
+      {% for item in items %}
+        <li>
+          {{ item.name }} (¥{{ item.price }})
+          <form method="post" style="display:inline;">
+            {% csrf_token %}
+            <input type="hidden" name="delete_id" value="{{ item.id }}">
+            <button type="submit">削除</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>商品がありません。</p>
+  {% endif %}
+</body>
+</html>
