@@ -1,0 +1,26 @@
+<!-- Ref: Chapter 11-2 from django_exercises_converted.md -->
+<!-- Display item search results or "該当する商品はありません。" -->
+{# templates/hello/search_item_by_name.html #}
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>商品検索（価格）</title></head>
+<body>
+  <h1>価格で商品を検索</h1>
+  <form method="get" action="{% url 'search_item_by_price' %}">
+    <input type="number" name="q" value="{{ q }}" placeholder="価格を入力">
+    <button type="submit">検索</button>
+  </form>
+  <hr>
+  {% if q %}
+    {% if results %}
+      <ul>
+        {% for item in results %}
+          <li>{{ item.name }} (¥{{ item.price }})</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>該当する商品はありません。</p>
+    {% endif %}
+  {% endif %}
+</body>
+</html>

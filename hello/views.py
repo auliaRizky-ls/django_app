@@ -62,4 +62,14 @@ def edit_item(request, item_id):
 def search_item_by_name(request):
     q = request.GET.get('q', '')
     result = Item.objects.filter(name__icontains=q) if q else []
-    return render(request, 'hello/search_item_by_name.html', {'result': result, 'q': q})
+    return render(request, 'hello/search_item_by_name.html', {'results': result, 'q': q})
+
+#question 11-2 search item by price
+def search_item_by_price(request):
+    q = request.GET.get('q', '')
+    try:
+        price = float(q) if q else 0
+        result = Item.objects.filter(price=price) if q else []
+    except ValueError:
+        result = []
+    return render(request, 'hello/search_item_by_price.html', {'results': result, 'q': q})
