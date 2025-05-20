@@ -22,6 +22,6 @@ urlpatterns = [
     path("items/search_price/", search_item_by_price, name = "search_item_by_price"),
 
     #question 12
-    path("items/sort_price/", sort_items_by_price, name = "sort_items_by_price"),
-    path("items/count/", count_items, name = "count_items"),
+    path("items/sorted_price/", sort_items_by_price, name = "sort_items_by_price"),
+    path("items/list_with_count/", count_items, name = "count_items"),
 ]
