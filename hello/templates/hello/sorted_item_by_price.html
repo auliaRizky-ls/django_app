@@ -1,0 +1,70 @@
+<!-- Ref: Chapter 12-1 from docs/django_exercise.md -->
+<!-- Page that displays items sorted by price (ascending and descending) -->
+<!-- Uses Django templating: loops through item list and renders name and price -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品一覧 - 価格順</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .sort-buttons {
+            margin-bottom: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .item-list {
+            list-style: none;
+            padding: 0;
+        }
+        .item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>商品一覧（価格順）</h1>
+    
+    <div class="sort-buttons">
+        <a href="{% url 'sort_items_by_price' %}?order=asc" class="button">価格: 安い順</a>
+        <a href="{% url 'sort_items_by_price' %}?order=desc" class="button">価格: 高い順</a>
+    </div>
+
+    <ul class="item-list">
+        {% if items %}
+            {% for item in items %}
+                <li class="item">
+                    <h3>{{ item.name }}</h3>
+                    <p>価格: ¥{{ item.price }}</p>
+                    {% if item.description %}
+                        <p>説明: {{ item.description }}</p>
+                    {% endif %}
+                    <p>在庫: {{ item.stock }}個</p>
+                </li>
+            {% endfor %}
+        {% else %}
+            <p>商品がありません。</p>
+        {% endif %}
+    </ul>
+</body>
+</html>

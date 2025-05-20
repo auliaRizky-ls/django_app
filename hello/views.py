@@ -73,3 +73,10 @@ def search_item_by_price(request):
     except ValueError:
         result = []
     return render(request, 'hello/search_item_by_price.html', {'results': result, 'q': q})
+
+# Reference: docs/django_exercise.md
+# Question 12-1 create a function to sort the items by price (ascending and descending)
+def sort_items_by_price(request):
+    order = request.GET.get('order', 'asc')
+    items = Item.objects.all().order_by('price' if order == 'asc' else '-price')
+    return render(request, 'hello/sorted_item_by_price.html', {'items': items})
