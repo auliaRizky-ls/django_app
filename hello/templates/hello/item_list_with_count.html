@@ -1,0 +1,48 @@
+<!-- Ref: Chapter 12-2 from django_app/docs/django_exercise.md -->
+<!-- Page that displays how many items are in the list -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品一覧</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .count {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .item-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .item-list li {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>商品一覧</h1>
+    
+    <div class="count">
+        総商品数: {{ items.count }} 点
+    </div>
+
+    <ul class="item-list">
+        {% for item in items %}
+            <li>• {{ item.name }} - ¥{{ item.price }}</li>
+        {% empty %}
+            <li>商品がありません。</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
