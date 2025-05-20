@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 #from django.views.generic import TemplateView
 from .forms import FriendForm
 from .forms import FindForm
+from .forms import CheckForm
 from .models import Friend
 from django.views.generic import ListView
 from django.views.generic import DetailView
@@ -87,6 +88,22 @@ def find(request):
         "data" : data,
     }
     return render(request, 'hello/find.html', params)
+
+def check(request):
+    params = {
+        "title" : "Hello",
+        "message" : "check validation.",
+        "form" : FriendForm(),
+    }
+    if (request.method == "POST"):
+        obj = Friend()
+        form = FriendForm(request.POST, instance=obj)
+        params["form"] = form
+        if form.is_valid():
+            params["message"] = "valid."
+        else:
+            params["message"] = "invalid."
+    return render(request, 'hello/check.html', params)
 
 # class HelloView(TemplateView):
 #     def __init__(self):
