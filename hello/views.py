@@ -84,3 +84,30 @@ def sort_items_by_price(request):
 def count_items(request):
     items = Item.objects.all()
     return render(request, 'hello/item_list_with_count.html', {'items': items})
+
+# Question 13-1 validate price view
+def validate_price(request):
+    error_message = None
+    success_message = None
+    
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        description = request.POST.get('description', '')
+        price = request.POST.get('price', '')
+        stock = request.POST.get('stock', '')
+        
+        try:
+            price_value = float(price)
+            if price_value < 1:
+                error_message = "価格は1円以上である必要があります。"
+            else:
+                item = Item(name=name, description=description, price=price_value, stock=stock)
+                item.save()
+                success_message = "商品が追加されました！"
+        except ValueError:
+            error_message = "価格は有効な数値である必要があります。"
+    
+    return render(request, 'hello/validate_price.html', {
+        'error_message': error_message,
+        'success_message': success_message
+    })
