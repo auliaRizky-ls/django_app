@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import products_cart, cart_clear, item_list, items_price_100, \
     manage_item, edit_item, item_edit_list, search_item_by_name, search_item_by_price, \
-    sort_items_by_price, count_items, validate_price
+    sort_items_by_price, count_items, validate_price, validate_stock
 
 urlpatterns = [
     #path('', HelloView.as_view(), name = 'index'),
@@ -27,4 +27,5 @@ urlpatterns = [
 
     #question 13
     path("validate_price/", validate_price, name="validate_price"),
+    path("validate_stock/", validate_stock, name="validate_stock"),
 ]

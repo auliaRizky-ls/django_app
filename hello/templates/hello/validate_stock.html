@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>在庫バリデーションチェック</title>
+    <style>
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>在庫バリデーションチェック</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description"></textarea>
+        </div>
+        <div>
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" required>
+        </div>
+        <div>
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" required>
+        </div>
+        <button type="submit">送信</button>
+    </form>
+
+    {% if error_message %}
+        <p class="error">エラー: {{ error_message }}</p>
+    {% endif %}
+
+    {% if success_message %}
+        <p class="success">✓ {{ success_message }}</p>
+    {% endif %}
+</body>
+</html>

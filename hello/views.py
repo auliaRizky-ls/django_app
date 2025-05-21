@@ -85,7 +85,7 @@ def count_items(request):
     items = Item.objects.all()
     return render(request, 'hello/item_list_with_count.html', {'items': items})
 
-# Question 13-1 validate price view
+# Question 13-1 validate price
 def validate_price(request):
     error_message = None
     success_message = None
@@ -108,6 +108,34 @@ def validate_price(request):
             error_message = "価格は有効な数値である必要があります。"
     
     return render(request, 'hello/validate_price.html', {
+        'error_message': error_message,
+        'success_message': success_message
+    })
+
+
+# Question 13-2 validate stock
+def validate_stock(request):
+    error_message = None
+    success_message = None
+    
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        description = request.POST.get('description', '')
+        price = request.POST.get('price', '')
+        stock = request.POST.get('stock', '')
+        
+        try:
+            stock_value = int(stock)
+            if stock_value < 0:
+                error_message = "在庫は0以上である必要があります。"
+            else:
+                item = Item(name=name, description=description, price=price, stock=stock_value)
+                item.save()
+                success_message = "商品が追加されました！"
+        except ValueError:
+            error_message = "在庫は有効な整数である必要があります。"
+    
+    return render(request, 'hello/validate_stock.html', {
         'error_message': error_message,
         'success_message': success_message
     })
