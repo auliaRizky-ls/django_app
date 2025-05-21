@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from .views import FriendList
-from .views import FriendDetail
+from .views import FriendDetail, Message
 
 urlpatterns = [
     path('', views.index, name = 'index'),
@@ -12,4 +12,7 @@ urlpatterns = [
     path('detail/<int:pk>', FriendDetail.as_view()),
     path('find', views.find, name = 'find'),
     path('check', views.check, name = 'check'),
+    path('<int:num>', views.index, name = 'index'),
+    path('message/', views.message, name = 'message'),
+    path('message/<int:num>', views.message, name = 'message'),
 ]

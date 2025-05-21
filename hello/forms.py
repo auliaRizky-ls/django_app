@@ -1,5 +1,5 @@
 from django import forms
-from .models import Friend
+from .models import Friend, Message
 
 class FriendForm(forms.ModelForm):
     class Meta:
@@ -34,3 +34,14 @@ class CheckForm(forms.Form):
         if (str.lower().startswith("no")):
             raise forms.ValidationError("You input no.")
         return cleaned_data
+
+# create a class based on the Message model
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['friend', 'title', 'content']
+        widgets = {
+            'friend': forms.Select(attrs={"class":"form-control"}),
+            'title': forms.TextInput(attrs={"class":"form-control"}),
+            'content': forms.Textarea(attrs={"class":"form-control"}),
+        }
