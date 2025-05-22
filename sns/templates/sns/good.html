@@ -1,0 +1,28 @@
+{% extends 'sns/layout.html' %}
+
+{% block title %}Good{% endblock %}
+
+{% block header %}
+    <h1 class = "display-4 text-primary">Goods</h1>
+    <p class = "caption">★Messages you've given good.</p>
+{% endblock %}
+
+{% block content %}
+    <table class = "table mt-3">
+        <tr><th>Messages</th></tr>
+        {% for item in contents %}
+            <tr><td>
+                <p class = "fs-5 my-0">
+                    {{ item.message.content }}
+                </p>
+                <p class = "text-end my-0">
+                    <span class = "fs-5">{{ item.message.owner }}</span>
+                    <span class = "fs-6">({{ item.message.pub_date }})</span>
+                </p>
+                <p class = "text-end my-0">
+                    👍{{ item.message.good_count }}
+                </p>
+            </td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}
